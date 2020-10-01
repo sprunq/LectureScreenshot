@@ -14,7 +14,6 @@ def checkIfFileExists(fpath):
                 continue
             else:
                 return new_fpath
-                break
     else:
         return str(fpath)
 
