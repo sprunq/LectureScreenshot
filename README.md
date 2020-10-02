@@ -12,7 +12,6 @@ If you have a different resolution calculate or try to find it yourself.
 ## Setup:
 Install Python and run these commands in the console: 
 ```
-python3 -m pip install --upgrade pip
-python3 -m pip install --upgrade Pillow
-python3 -m pip install --upgrade keyboard
+pip install Pillow
+pip install keyboard
 ```
