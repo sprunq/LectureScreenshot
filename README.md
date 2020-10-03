@@ -4,14 +4,10 @@ A simple script for making automatic/manual screenshots of my Zoom lecture every
 This script saves every screenshot as a png in a session subfolder, which is randomly determined at startup, in the date subfolder. 
 Compile the script screenshots into one pdf with applications like Gimp or online services.
 
-## Important:
-Default screenshot button is F8 but feel free to change it in the source code.
-The values in the automatic function are set to crop with a 1440p 16:9 screen with Zoom in fullscreen and chat and participant list extended.
-If you have a different resolution calculate or try to find it yourself. 
-
 ## Setup:
 Install Python and run these commands in the console: 
 ```
 pip install Pillow
 pip install keyboard
+pip install pynput
 ```
