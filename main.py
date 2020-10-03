@@ -1,4 +1,5 @@
 from PIL import Image, ImageGrab, ImageChops
+from pynput.mouse import Controller
 import os.path
 import datetime
 import keyboard
@@ -52,13 +53,13 @@ def main():
     now = datetime.datetime.now()
     date = str(now.strftime("%m.%d.%y"))
     session = str(random.randint(0,999999))
-    directory = "TestData"
+    directory = "Diskrete Mathematik 2020"
 
     path_manual = os.path.join(working_dir, directory, date, "Manual", session)
     path_automatic = os.path.join(working_dir, directory, date, "Automatic", session)
 
     manualThead = threading.Thread(target=ManualScreenshot, args=(path_manual,"F8",))
-    automaticThead = threading.Thread(target=AutoScreenshot, args=(path_automatic,2,))
+    automaticThead = threading.Thread(target=AutoScreenshot, args=(path_automatic,2,"F9",))
 
     manualThead.start()
     automaticThead.start()
@@ -79,14 +80,30 @@ def ManualScreenshot(path, screenshot_key):
             index +=1
 
 
-def AutoScreenshot(path, screenshot_interval):
+def AutoScreenshot(path, screenshot_interval, pageindex_select_key):
     """
-    Takes a screenshot of the main monitor every few seconds,
+    User has to select the page number with pageindex_select_key.
+    Takes a screenshot of the main monitor every few seconds (screenshot_interval),
     crops the screenshots to the script index and if the two screenshots
     are different, meaning it's a different page, it saves the older screenshot.
     """
     CreateDirectory(path)
-    crop_factors = (1920,1342, 2560-600 ,1440-50)
+    mouse = Controller()
+    print("Move your mouse to the top left position of the page index and press {}".format(pageindex_select_key))
+    while True:
+        if keyboard.is_pressed(str(pageindex_select_key)):
+            top_left_pos = mouse.position
+            break
+
+    time.sleep(1)
+    print("Move your mouse to the bottom right position of the page index and press {}".format(pageindex_select_key))
+    while True:
+        if keyboard.is_pressed(str(pageindex_select_key)):
+            bottom_right_pos = mouse.position
+            break
+
+    crop_factors = (top_left_pos[0], top_left_pos[1], bottom_right_pos[0], bottom_right_pos[1])
+    print("Crop factors: " + str(crop_factors))
     index = 0
     temp2Screen = ImageGrab.grab()
     while True:
